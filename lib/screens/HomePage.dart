@@ -40,47 +40,11 @@ class _HomePageState extends State<HomePage> {
   get() async {
     serf = Geolocator.isLocationServiceEnabled();
     if (serf == false) {
-      Center(
-        child: Column(
-          children: [
-            Text("يحتاج التطبيق إلى صلاحية الموقع لجلب أوقات الصلاة إلى موقعك"),
-            ElevatedButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    )),
-                child: Text("موافق")),
-          ],
-        ),
-      );
-    }
-    per = await Geolocator.checkPermission();
-    if (per == LocationPermission.denied && per == LocationPermission.values) {
-      Geolocator.requestPermission();
-    }
-    if (per == LocationPermission.deniedForever) {
-      Center(
-        child: Column(
-          children: [
-            Text("يحتاج التطبيق إلى صلاحية الموقع لجلب أوقات الصلاة إلى موقعك"),
-            ElevatedButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    )),
-                child: Text("موافق")),
-          ],
-        ),
-      );
-
-      if (per == LocationPermission.unableToDetermine) {
-        Center(
+      Scaffold(
+        body: Center(
           child: Column(
             children: [
-              Text(
-                  "يحتاج التطبيق إلى صلاحية الموقع لجلب أوقات الصلاة إلى موقعك"),
+              Text("يحتاج التطبيق إلى صلاحية الموقع لجلب أوقات الصلاة إلى موقعك"),
               ElevatedButton(
                   onPressed: () => Navigator.push(
                       context,
@@ -89,6 +53,48 @@ class _HomePageState extends State<HomePage> {
                       )),
                   child: Text("موافق")),
             ],
+          ),
+        ),
+      );
+    }
+    per = await Geolocator.checkPermission();
+    if (per == LocationPermission.denied && per == LocationPermission.values) {
+      Geolocator.requestPermission();
+    }
+    if (per == LocationPermission.deniedForever) {
+      Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              Text("يحتاج التطبيق إلى صلاحية الموقع لجلب أوقات الصلاة إلى موقعك"),
+              ElevatedButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      )),
+                  child: Text("موافق")),
+            ],
+          ),
+        ),
+      );
+
+      if (per == LocationPermission.unableToDetermine) {
+        Scaffold(
+          body: Center(
+            child: Column(
+              children: [
+                Text(
+                    "يحتاج التطبيق إلى صلاحية الموقع لجلب أوقات الصلاة إلى موقعك"),
+                ElevatedButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        )),
+                    child: Text("موافق")),
+              ],
+            ),
           ),
         );
       }
@@ -107,7 +113,6 @@ class _HomePageState extends State<HomePage> {
     Fajr = responsebody['data']['timings']["Fajr"];
     Fajrf = DateFormat('hh:mm').parse(Fajr);
     fajrh = DateFormat("hh:mm a").format(Fajrf);
-    print(fajrh);
     Dhuhr = responsebody['data']['timings']["Dhuhr"];
     Dhuhrf = DateFormat('hh:mm').parse(Dhuhr);
     Dhuhrh = DateFormat("hh:mm a").format(Dhuhrf);
